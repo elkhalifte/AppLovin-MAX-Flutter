@@ -166,10 +166,14 @@ enum ErrorCode {
   /// Returns [ErrorCode.unspecified] if no match is found.
   static ErrorCode fromValue(int value) {
     try {
-      return ErrorCode.values.firstWhere((e) => e.value == value);
+      return _byValue[value] ?? ErrorCode.unspecified;
     } catch (e) {
       debugPrint('Unknown error code: $value');
       return ErrorCode.unspecified;
     }
   }
+
+  static final Map<int, ErrorCode> _byValue = {
+    for (final e in ErrorCode.values) e.value: e,
+  };
 }
